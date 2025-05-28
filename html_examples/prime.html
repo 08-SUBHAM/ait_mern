@@ -34,8 +34,19 @@
         function checkPrime() {
             const number = parseInt(document.getElementById("inputNumber").value);
             const output = document.getElementById("output");
-
-            square = number * number
+            let isPrime = true;
+            for(let i = 2; i<number; i++){
+              if(number%i==0){
+                isPrime = false;
+                break;
+              }
+            }
+            if(isPrime){
+              output.value = "true";
+            }
+            else{
+              output.value = "false";
+            }
         }
     </script>
 
