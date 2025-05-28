@@ -20,22 +20,37 @@
       </div>
   
       <div class="w-full">
-        <label for="output" class="block text-orange-500 mb-1">Is Prime?</label>
+        <label for="output" class="block text-orange-500 mb-1">Output</label>
         <input type="text" id="output" readonly class="w-full p-2 rounded bg-gray-700 text-white">
       </div>
   
-      <button onclick="checkPrime()" class="cursor-pointer w-full bg-orange-500 text-white p-2 rounded hover:bg-orange-400 active:bg-orange-800 transition">
-        Check Prime
+      <button onclick="findsquare()" class="cursor-pointer w-full bg-orange-500 text-white p-2 rounded hover:bg-orange-400 active:bg-orange-800 transition">
+        square
+      </button>
+
+      <button onclick="findcube()" class="cursor-pointer w-full bg-orange-500 text-white p-2 rounded hover:bg-orange-400 active:bg-orange-800 transition">
+        cube
       </button>
   
     </div>
 
     <script>
-        function checkPrime() {
+        function findsquare() {
             const number = parseInt(document.getElementById("inputNumber").value);
             const output = document.getElementById("output");
+            let sqaure = number* number;
+            output.value = sqaure;
+            
 
-            square = number * number
+        }
+
+        function findcube() {
+            const number = parseInt(document.getElementById("inputNumber").value);
+            const output = document.getElementById("output");
+            let cube = number* number* number;
+            output.value = cube;
+            
+
         }
     </script>
 
