@@ -3,57 +3,55 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prime Number</title>
-    <style>
-        div>div {
-            margin: 10px;
-        }
-
-        label {
-            width: 200px;
-        }
-
-        button {
-            width: 120px;
-            background-color: orange;
-            height: 30px;
-            border: 2px solid darkred;
-            border-radius: 10px;
-            margin-left: 80px;
-
-        }
-    </style>
+    <link rel="stylesheet" href="./output.css">
 </head>
 
-<body>
-    <div>
-        <div>
-            <label for="inputNumber"> Input Number </label>
-            <input type="text" id="inputNumber">
-        </div>
-        <label for="output"> Is Prime </label>
-        <input type="text" id="output">
-        <div>
-            <button onclick="checkPrime()"> Check Prime </button>
-        </div>
+<body class="bg-gray-900 flex items-center justify-center min-h-screen">
+
+    <div class="w-80 bg-gray-800 rounded-2xl p-6 shadow-lg flex flex-col items-center gap-5">
+      
+      <h2 class="text-white text-xl font-semibold">Prime Number Checker</h2>
+  
+      <div class="w-full">
+        <label for="inputNumber" class="block text-orange-500 mb-1">Input Number</label>
+        <input type="text" id="inputNumber" class="w-full p-2 rounded bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-orange-500">
+      </div>
+  
+      <div class="w-full">
+        <label for="output" class="block text-orange-500 mb-1">Is Prime?</label>
+        <input type="text" id="output" readonly class="w-full p-2 rounded bg-gray-700 text-white">
+      </div>
+  
+      <button onclick="checkPrime()" class="cursor-pointer w-full bg-orange-500 text-white p-2 rounded hover:bg-orange-400 active:bg-orange-800 transition">
+        Check Prime
+      </button>
+  
     </div>
+
     <script>
         function checkPrime() {
-            number = parseInt(document.getElementById(inputNumber))
-            isPrime = true
+            const number = parseInt(document.getElementById("inputNumber").value);
+            const output = document.getElementById("output");
+
+            if (isNaN(number) || number < 2) {
+                output.value = "No";
+                return;
+            }
+
+            let isPrime = true;
             for (let i = 2; i <= Math.sqrt(number); i++) {
-                if (number % i == 0) {
-                    isPrime = false
-                    break
+                if (number % i === 0) {
+                    isPrime = false;
+                    break;
                 }
             }
-            if (isPrime)
-                document.getElementById("output").innerText = "Yes"
-            else
-                document.getElementById("output").innerText = "No"
+
+            output.value = isPrime ? "Yes" : "No";
         }
     </script>
+
 </body>
 
 </html>
