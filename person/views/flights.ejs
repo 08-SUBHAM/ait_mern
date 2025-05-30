@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/flights.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">Flight Management</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/flights">Flights</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">About</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Flight Management</h2>
+                <button id="addFlightBtn" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#flightModal">
+                    <i class="bi bi-plus-circle"></i> Add New Flight
+                </button>
+                
+                <div id="flightList" class="row">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="flightModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">Add New Flight</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="flightForm" onsubmit="event.preventDefault(); saveFlight();">
+                        <input type="hidden" id="flightId">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="flightNumber" class="form-label">Flight Number</label>
+                                <input type="text" class="form-control" id="flightNumber" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="airline" class="form-label">Airline</label>
+                                <input type="text" class="form-control" id="airline" required>
+                            </div>
+                        </div>
+                        
+                        <h5>Departure</h5>
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label for="departureCity" class="form-label">City</label>
+                                <input type="text" class="form-control" id="departureCity" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="departureAirport" class="form-label">Airport</label>
+                                <input type="text" class="form-control" id="departureAirport" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="departureTime" class="form-label">Date & Time</label>
+                                <input type="datetime-local" class="form-control" id="departureTime" required>
+                            </div>
+                        </div>
+                        
+                        <h5>Arrival</h5>
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label for="arrivalCity" class="form-label">City</label>
+                                <input type="text" class="form-control" id="arrivalCity" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="arrivalAirport" class="form-label">Airport</label>
+                                <input type="text" class="form-control" id="arrivalAirport" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="arrivalTime" class="form-label">Date & Time</label>
+                                <input type="datetime-local" class="form-control" id="arrivalTime" required>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="price" class="form-label">Price ($)</label>
+                                <input type="number" class="form-control" id="price" min="0" step="0.01" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="seats" class="form-label">Available Seats</label>
+                                <input type="number" class="form-control" id="seats" min="1" required>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="status" class="form-label">Status</label>
+                            <select class="form-select" id="status">
+                                <option value="scheduled">Scheduled</option>
+                                <option value="delayed">Delayed</option>
+                                <option value="departed">Departed</option>
+                                <option value="arrived">Arrived</option>
+                                <option value="cancelled">Cancelled</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="saveFlight">
+                        <span class="spinner-border spinner-border-sm d-none" id="saveSpinner" role="status" aria-hidden="true"></span>
+                        <span id="saveText">Save changes</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirm Deletion</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete this flight?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancelDelete">
+                        <i class="bi bi-x-circle me-1"></i> Cancel
+                    </button>
+                    <button type="button" class="btn btn-danger" id="confirmDelete" onclick="deleteFlight()">
+                        <i class="bi bi-trash me-1"></i> Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/flights.js"></script>
+    <script>
+
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+    </script>
+</body>
+</html>
